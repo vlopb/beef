@@ -1,26 +1,20 @@
-FROM ruby:3.1-slim
+version: '3.8'
 
-# Instalar dependencias del sistema
-RUN apt-get update && apt-get install -y \
-    git \
-    build-essential \
-    curl \
-    libsqlite3-dev \
-    && rm -rf /var/lib/apt/lists/*
+services:
+  beef:
+    image: beefproject/beef
+    container_name: beef
+    ports:
+      - "8888:3000"   # UI Web (puerto 8888 externo -> 3000 interno)
+      - "6789:6789"   # Hook
+      - "61985:61985" # WebSocket
+      - "61986:61986" # WebSocket
+    volumes:
+      - beef-data:/opt/beef/data
+    environment:
+      - BEEF_USER=beef
+      - BEEF_PASSWD=MiPasswordSeguro123
+    restart: unless-stopped
 
-# Clonar BeEF
-WORKDIR /opt
-RUN git clone https://github.com/beefproject/beef.git
-
-# Configurar BeEF
-WORKDIR /opt/beef
-RUN bundle install
-
-# Exponer puertos
-# 8888: UI Web
-# 6789: Hook
-# 61985-61986: WebSocket
-EXPOSE 8888 6789 61985 61986
-
-# Comando de inicio
-CMD ["./beef"]
+volumes:
+  beef-data:
