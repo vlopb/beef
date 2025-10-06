@@ -1,11 +1,13 @@
 FROM ruby:3.2-slim
 
-# Instalar dependencias del sistema
+# Instalar TODAS las dependencias necesarias
 RUN apt-get update && apt-get install -y \
     git \
     build-essential \
     curl \
+    libcurl4-openssl-dev \
     libsqlite3-dev \
+    libyaml-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Clonar BeEF
@@ -16,8 +18,8 @@ RUN git clone https://github.com/beefproject/beef.git
 WORKDIR /opt/beef
 RUN bundle install
 
-# Exponer puertos
-EXPOSE 8888 6789 61985 61986
+# Exponer puerto interno (BeEF usa 3000 por defecto)
+EXPOSE 3000 6789 61985 61986
 
 # Comando de inicio
 CMD ["./beef"]
