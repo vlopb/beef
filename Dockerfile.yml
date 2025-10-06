@@ -13,7 +13,7 @@ services:
       - beef-data:/opt/beef/data
     environment:
       - BEEF_USER=beef
-      - BEEF_PASSWD=MiPasswordSeguro123
+      - BEEF_PASSWD=$Daiana01.
     restart: unless-stopped
 
 volumes:
