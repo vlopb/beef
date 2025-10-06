@@ -1,4 +1,4 @@
-FROM ruby:3.1-slim
+FROM ruby:3.2-slim
 
 # Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
@@ -17,7 +17,7 @@ WORKDIR /opt/beef
 RUN bundle install
 
 # Exponer puertos
-EXPOSE 3000 6789 61985 61986
+EXPOSE 8888 6789 61985 61986
 
 # Comando de inicio
 CMD ["./beef"]
